@@ -32,7 +32,11 @@
                   <div class="candidate-list-details">
                     <div class="candidate-list-info">
                       <div class="candidate-list-title">
-                        <h5 class="mb-0"><a href="#">@student.FirstName @student.LastName</a></h5>
+                        <h5 class="mb-0">
+                          <NavLink href="@($"Student/{student.IdStudent}")">
+                            <a>@student.FirstName @student.LastName</a >
+                          </NavLink>
+                        </h5>
                       </div>
                       <div class="candidate-list-option">
                         <ul class="list-unstyled">
