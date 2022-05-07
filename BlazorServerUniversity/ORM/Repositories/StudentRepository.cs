@@ -38,6 +38,21 @@ public class StudentRepository : IStudentRepository
         return await _context.Students.FirstOrDefaultAsync(s => s.IdStudent == id);
     }
 
+    public async Task<IEnumerable<StudentInfo?>> GetAllDisciplines(int id)
+    {
+        return await (from s in _context.Students
+            join sd in _context.StudentDisciplines on s.IdStudent equals sd.StudentId
+            join d in _context.Disciplines on sd.DisciplineId equals d.IdDiscipline
+            where sd.StudentId == id
+            select new StudentInfo()
+            {
+                IdStudent = sd.StudentId,
+                IdDiscipline = sd.DisciplineId,
+                Grade = sd.Grade,
+                DisciplineName = d.Name
+            }).ToListAsync();
+    }
+
     public async Task Add(Student student)
     {
         await _context.Students.AddAsync(student);
