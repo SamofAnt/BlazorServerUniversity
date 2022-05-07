@@ -11,6 +11,6 @@ public class ExamsConfiguration : IEntityTypeConfiguration<ListExamsForEachGroup
 
         builder.ToView("ListExamsForEachGroup");
 
-        builder.Property(e => e.FullName).HasColumnName("Full Name");
+        builder.Property(e => e.FullName).HasColumnName("FullName");
     }
 }

@@ -11,7 +11,7 @@ public class DisciplinesForProfessorConfiguration : IEntityTypeConfiguration<Lis
 
         builder.ToView("ListOfDisciplinesForEachProfessors");
 
-        builder.Property(e => e.DisciplineType).HasColumnName("Discipline Type");
+        builder.Property(e => e.DisciplineType).HasColumnName("DisciplineType");
 
     }
 }

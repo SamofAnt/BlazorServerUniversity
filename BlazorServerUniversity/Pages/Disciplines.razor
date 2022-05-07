@@ -1,0 +1,37 @@
+﻿@page "/Disciplines"
+@using System.Text
+
+@inject UniversityContext Context
+
+@{
+    var Tool = (new List<string>() {"Search"});
+}
+<SpinLoader IsLoading="isLoading" Spinner="SpinnerType.CircleFade" Center="true" Color="#800080">
+    <ContentTemplate>
+        <SfGrid DataSource="@disciplines" AllowPaging="true" AllowFiltering="true" AllowSorting="true" Toolbar="@Tool">
+
+            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+            <GridPageSettings PageSize="5" PageCount="3" PageSizes="true"></GridPageSettings>
+            <GridColumns>
+                <GridColumn Field=@nameof(ListOfDisciplinesForEachProfessor.Discipline) HeaderText="Дисциплина"></GridColumn>
+                <GridColumn Field=@nameof(ListOfDisciplinesForEachProfessor.DisciplineType) HeaderText="Форма"></GridColumn>
+                <GridColumn Field=@nameof(ListOfDisciplinesForEachProfessor.Group) HeaderText="Группа"></GridColumn>
+                <GridColumn Field=@nameof(ListOfDisciplinesForEachProfessor.ProfessorName) HeaderText="Преподаватель"></GridColumn>
+            </GridColumns>
+        </SfGrid>
+    </ContentTemplate>
+</SpinLoader>
+@code {
+    public IEnumerable<ListOfDisciplinesForEachProfessor> disciplines { get; set; }
+    private bool isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        isLoading = true;
+        await base.OnInitializedAsync();
+        await Task.Delay(1500);
+        isLoading = false;
+        disciplines = Context.ListOfDisciplinesForEachProfessors;
+    }
+
+}

@@ -32,7 +32,7 @@ builder.Services
     .AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
-builder.Services.AddSyncfusionBlazor();
+builder.Services.AddSyncfusionBlazor(options => { options.IgnoreScriptIsolation = true; });
 builder.Services.AddAuthentication()
     .AddCookie("Cookies")
     .AddFacebook(options =>

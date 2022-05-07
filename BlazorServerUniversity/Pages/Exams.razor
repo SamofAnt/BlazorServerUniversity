@@ -1,0 +1,38 @@
+﻿@page "/Exams"
+
+@inject UniversityContext Context
+
+@{
+    var Tool = (new List<string>() {"Search"});
+}
+<SpinLoader IsLoading="isLoading" Spinner="SpinnerType.CircleFade" Center="true" Color="#800080">
+    <ContentTemplate>
+        <SfGrid DataSource="@exams" AllowPaging="true" AllowFiltering="true" AllowSorting="true" Toolbar="@Tool">
+
+            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+            <GridPageSettings PageSize="10" PageCount="3" PageSizes="true"></GridPageSettings>
+            <GridColumns>
+                <GridColumn Field=@nameof(ListExamsForEachGroup.Group) HeaderText="Группа"
+                            FilterSettings="@(new FilterSettings() {Type = Syncfusion.Blazor.Grids.FilterType.CheckBox})">
+                </GridColumn>
+                <GridColumn Field=@nameof(ListExamsForEachGroup.Discipline) HeaderText="Дисциплина"></GridColumn>
+                <GridColumn Field=@nameof(ListExamsForEachGroup.DisciplineType) HeaderText="Форма"></GridColumn>
+            </GridColumns>
+        </SfGrid>
+    </ContentTemplate>
+</SpinLoader>
+@code {
+    public IEnumerable<ListExamsForEachGroup> exams { get; set; }
+    private bool isLoading = true;
+    public Query RemoteDataQuery = new Query().Select(new List<string> { "Group" });
+
+    protected override async Task OnInitializedAsync()
+    {
+        isLoading = true;
+        await base.OnInitializedAsync();
+        await Task.Delay(1500);
+        isLoading = false;
+        exams = Context.ListExamsForEachGroups;
+    }
+
+}
