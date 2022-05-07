@@ -9,6 +9,7 @@ using BlazorServerUniversity.Areas.Identity;
 using BlazorServerUniversity.Data;
 using BlazorServerUniversity.Repositories;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Syncfusion.Blazor;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
@@ -31,6 +32,7 @@ builder.Services
     .AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+builder.Services.AddSyncfusionBlazor();
 builder.Services.AddAuthentication()
     .AddCookie("Cookies")
     .AddFacebook(options =>

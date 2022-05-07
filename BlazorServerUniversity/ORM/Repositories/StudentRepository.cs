@@ -17,11 +17,11 @@ public class StudentRepository : IStudentRepository
 
     public async Task<IEnumerable<StudentInfo>> GetAll()
     {
-        
-           return await (from s in _context.Students
+
+        return await (from s in _context.Students
             join pd in _context.PersonalData on s.IdStudent equals pd.StudentId
             join g in _context.Groups on s.GroupId equals g.IdGroup
-            orderby pd.LastName
+            orderby g.Name, pd.LastName
             select new StudentInfo()
             {
                 IdStudent = s.IdStudent,

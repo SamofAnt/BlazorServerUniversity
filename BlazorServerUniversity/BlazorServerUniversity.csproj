@@ -11,6 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="BlazorPro.Spinkit" Version="1.2.0" />
         <PackageReference Include="Devart.Data.SQLite.EFCore" Version="5.19.2066" />
         <PackageReference Include="Devart.Data.SQLite.EFCore.Design" Version="5.19.2066" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="6.0.4" />
@@ -27,6 +28,9 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.3" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
         <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.3" />
+        <PackageReference Include="Syncfusion.Blazor.Grid" Version="20.1.0.52" />
+        <PackageReference Include="Syncfusion.Blazor.Spinner" Version="20.1.0.52" />
+        <PackageReference Include="Syncfusion.Blazor.Themes" Version="20.1.0.52" />
     </ItemGroup>
 
 </Project>
