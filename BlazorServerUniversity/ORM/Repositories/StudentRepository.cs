@@ -6,19 +6,26 @@ namespace BlazorServerUniversity.Repositories;
 public class StudentRepository : IStudentRepository
 {
     private readonly UniversityContext _context;
-    public StudentRepository(UniversityContext context)
-    {
-        _context = context ?? throw new ArgumentNullException(nameof(context));
-    }
-    public async Task<Student> GetById(int id)
-    {
-        return await _context.Students.FirstAsync(s => s.IdStudent == id);
-    }
+    public StudentRepository(UniversityContext context) => _context = context ?? throw new ArgumentNullException(nameof(context));
+    public async Task<Student> GetById(int id) => await _context.Students.FirstAsync(s => s.IdStudent == id);
 
-    public async Task<IEnumerable<StudentInfo>> GetAll()
-    {
+    public async Task<IEnumerable<Student>> GetAll() => await _context.Students.ToListAsync();
+    public async Task<IEnumerable<StudentInfo>> GetAllWithInfo() =>
+        await (from s in _context.Students
+            join pd in _context.PersonalData on s.IdStudent equals pd.StudentId
+            join g in _context.Groups on s.GroupId equals g.IdGroup
+            select new StudentInfo()
+            {
+                IdStudent = s.IdStudent,
+                FirstName = pd.FirstName,
+                LastName = pd.LastName,
+                Age = pd.Age,
+                Address = pd.Address,
+                GroupName = g.Name
+            }).ToListAsync();
 
-        return await (from s in _context.Students
+    public async Task<IEnumerable<StudentInfo>> GetAllByGroup() =>
+        await (from s in _context.Students
             join pd in _context.PersonalData on s.IdStudent equals pd.StudentId
             join g in _context.Groups on s.GroupId equals g.IdGroup
             orderby g.Name, pd.LastName
@@ -31,16 +38,11 @@ public class StudentRepository : IStudentRepository
                 Address = pd.Address,
                 GroupName = g.Name
             }).ToListAsync();
-    }
 
-    public async Task<Student?> FindById(int id)
-    {
-        return await _context.Students.FirstOrDefaultAsync(s => s.IdStudent == id);
-    }
+    public async Task<Student?> FindById(int id) => await _context.Students.FirstOrDefaultAsync(s => s.IdStudent == id);
 
-    public async Task<IEnumerable<StudentInfo?>> GetAllDisciplines(int id)
-    {
-        return await (from s in _context.Students
+    public async Task<IEnumerable<StudentInfo?>> GetAllDisciplines(int id) =>
+        await (from s in _context.Students
             join sd in _context.StudentDisciplines on s.IdStudent equals sd.StudentId
             join d in _context.Disciplines on sd.DisciplineId equals d.IdDiscipline
             where sd.StudentId == id
@@ -51,7 +53,6 @@ public class StudentRepository : IStudentRepository
                 Grade = sd.Grade,
                 DisciplineName = d.Name
             }).ToListAsync();
-    }
 
     public async Task Add(Student student)
     {

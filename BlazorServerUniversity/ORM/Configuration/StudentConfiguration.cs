@@ -9,7 +9,7 @@ public class StudentConfiguration : IEntityTypeConfiguration<Student>
     {
         builder.HasKey(e => e.IdStudent);
 
-        builder.Property(e => e.IdStudent).ValueGeneratedNever();
+        builder.Property(e => e.IdStudent).ValueGeneratedOnAdd();
 
         builder.HasOne(d => d.Group)
             .WithMany(p => p.Students)

@@ -11,6 +11,8 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="Blazored.Modal" Version="6.0.0" />
+        <PackageReference Include="Blazored.Toast" Version="3.2.2" />
         <PackageReference Include="BlazorPro.Spinkit" Version="1.2.0" />
         <PackageReference Include="Devart.Data.SQLite.EFCore" Version="5.19.2066" />
         <PackageReference Include="Devart.Data.SQLite.EFCore.Design" Version="5.19.2066" />
@@ -31,6 +33,7 @@
         <PackageReference Include="Syncfusion.Blazor.Buttons" Version="20.1.0.55" />
         <PackageReference Include="Syncfusion.Blazor.Grid" Version="20.1.0.55" />
         <PackageReference Include="Syncfusion.Blazor.PdfViewerServer.Windows" Version="20.1.0.55" />
+        <PackageReference Include="Syncfusion.Blazor.Popups" Version="20.1.0.55" />
         <PackageReference Include="Syncfusion.Blazor.Spinner" Version="20.1.0.55" />
         <PackageReference Include="Syncfusion.Blazor.Themes" Version="20.1.0.55" />
     </ItemGroup>

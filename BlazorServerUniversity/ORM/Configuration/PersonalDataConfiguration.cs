@@ -9,7 +9,7 @@ public class PersonalDataConfiguration: IEntityTypeConfiguration<PersonalDatum>
     {
         builder.HasKey(e => e.IdPersonalData);
 
-        builder.Property(e => e.IdPersonalData).ValueGeneratedNever();
+        builder.Property(e => e.IdPersonalData).ValueGeneratedOnAdd();
 
         builder.HasOne(d => d.Professor)
             .WithMany(p => p.PersonalData)

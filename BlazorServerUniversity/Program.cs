@@ -1,3 +1,5 @@
+using Blazored.Modal;
+using Blazored.Toast;
 using BlazorServerUniversity;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
@@ -32,7 +34,10 @@ builder.Services
     .AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+builder.Services.AddScoped<IPersonalDataRepository, PersonalDataRepository>();
+builder.Services.AddBlazoredToast();
 builder.Services.AddSyncfusionBlazor(options => { options.IgnoreScriptIsolation = true; });
+builder.Services.AddBlazoredModal();
 builder.Services.AddAuthentication()
     .AddCookie("Cookies")
     .AddFacebook(options =>

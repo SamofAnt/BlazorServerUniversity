@@ -207,7 +207,7 @@
         await base.OnInitializedAsync();
         await Task.Delay(1500);
         _disciplinesStudent = StudentRepository.GetAllDisciplines(StudentId).Result;
-        var students = await StudentRepository.GetAll();
+        var students = await StudentRepository.GetAllWithInfo();
         _student = students.FirstOrDefault(s => s.IdStudent == StudentId)!;
         isLoading = false;
     }
