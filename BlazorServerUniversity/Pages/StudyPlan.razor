@@ -1,0 +1,15 @@
+﻿@page "/StudyPlan"
+@attribute [Authorize(Roles = "Student")]
+<AuthorizeView>
+<Authorized>
+    <SfPdfViewerServer Width="1500px" Height="900px" DocumentPath="@DocumentPath" @ref="@Viewer"/>
+</Authorized>
+</AuthorizeView>
+@code {
+    SfPdfViewerServer Viewer;
+    public string DocumentPath { get; set; } = "wwwroot/data/StudyPlan.pdf";
+    public void OnClick(MouseEventArgs args)
+    {
+        Viewer.Download();
+    }   
+}
