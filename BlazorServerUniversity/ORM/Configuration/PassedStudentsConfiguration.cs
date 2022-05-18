@@ -11,6 +11,6 @@ public class PassedStudentsConfiguration: IEntityTypeConfiguration<StudentsWhoPa
 
         builder.ToView("StudentsWhoPayPass");
 
-        builder.Property(e => e.FullName).HasColumnName("Full Name");
+        builder.Property(e => e.Name).HasColumnName("Name");
     }
 }

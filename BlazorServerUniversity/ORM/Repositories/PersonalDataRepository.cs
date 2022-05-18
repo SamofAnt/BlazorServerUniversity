@@ -27,9 +27,10 @@ public class PersonalDataRepository : IPersonalDataRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task Remove(PersonalDatum entity)
+    public async Task Remove(StudentInfo entity)
     {
-        _context.Remove(entity);
+        var studentToDelete = GetAll().Result.First(s => s.StudentId == entity.IdStudent);
+        _context.Remove(studentToDelete);
         await _context.SaveChangesAsync();
     }
 }

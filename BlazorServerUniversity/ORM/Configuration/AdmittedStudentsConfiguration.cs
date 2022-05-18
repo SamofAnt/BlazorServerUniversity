@@ -9,10 +9,10 @@ public class AdmittedStudentsConfiguration : IEntityTypeConfiguration<ListOfAdmi
     {
         builder.HasNoKey();
 
-        builder.ToView("ListOfAdmittedStudents");
+        builder.ToView("ListOfAdmittedStudent");
 
-        builder.Property(e => e.DisciplineType).HasColumnName("Discipline Type");
+        builder.Property(e => e.DisciplineType).HasColumnName("DisciplineType");
 
-        builder.Property(e => e.FullName).HasColumnName("Full Name");
+        builder.Property(e => e.Name).HasColumnName("Name");
     }
 }

@@ -9,15 +9,10 @@
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
         <AuthorizeView Roles="Admin">
             <div class="nav-item px-3">
                 <NavLink class="nav-link" href="students">
-                    <span class="oi oi-person" aria-hidden="true"></span> Students
+                    <span class="oi oi-person" aria-hidden="true"></span> Студенты
                 </NavLink>
             </div>
         </AuthorizeView>
@@ -31,24 +26,39 @@
         <AuthorizeView Roles="Student">
             <div class="nav-item px-3">
                             <NavLink class="nav-link" href="StudyPlan">
-                                <span class="oi oi-book" aria-hidden="true"></span> Study plan
+                                <span class="oi oi-book" aria-hidden="true"></span> Учебный план
                             </NavLink>
                             </div>
         </AuthorizeView>
         <AuthorizeView Roles="Admin">
             <div class="nav-item px-3">
                 <NavLink class="nav-link" href="Exams">
-                    <span class="oi oi-list-rich" aria-hidden="true"></span> Exams
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Экзамены у групп
                 </NavLink>
             </div>    
         </AuthorizeView>
-              <AuthorizeView Roles="Admin">
-                    <div class="nav-item px-3">
-                        <NavLink class="nav-link" href="Disciplines">
-                            <span class="oi oi-list-rich" aria-hidden="true"></span> Disciplines
-                        </NavLink>
-                        </div>    
-                </AuthorizeView>
+        <AuthorizeView Roles="Admin">
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="Disciplines">
+                    <span class="oi oi-spreadsheet" aria-hidden="true"></span> Дисциплины
+                </NavLink>
+            </div>    
+        </AuthorizeView>
+        <AuthorizeView Roles="Admin">
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="AdmittedStudents">
+                    <span class="oi oi-check" aria-hidden="true"></span> Допущенные студенты
+                </NavLink>
+            </div>    
+        </AuthorizeView>
+        
+        <AuthorizeView Roles="Admin">
+                            <div class="nav-item px-3">
+                                <NavLink class="nav-link" href="PayStudents">
+                                    <span class="oi oi-dollar" aria-hidden="true"></span> Платные студенты
+                                </NavLink>
+                                </div>    
+                        </AuthorizeView>
     </nav>
 </div>
 

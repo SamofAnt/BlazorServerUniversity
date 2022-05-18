@@ -8,5 +8,5 @@ public interface IPersonalDataRepository
     
     Task Add(PersonalDatum entity);
     Task Update(PersonalDatum entity);
-    Task Remove(PersonalDatum entity);
+    Task Remove(StudentInfo entity);
 }

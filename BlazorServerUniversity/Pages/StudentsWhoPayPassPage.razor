@@ -1,0 +1,36 @@
+﻿@page "/PayStudents"
+
+@inject UniversityContext Context
+
+@{
+    var Tool = (new List<string>() {"Search"});
+}
+<SpinLoader IsLoading="isLoading" Spinner="SpinnerType.CircleFade" Center="true" Color="#800080">
+    <ContentTemplate>
+        <SfGrid DataSource="@students" AllowPaging="true" AllowFiltering="true" AllowSorting="true" Toolbar="@Tool">
+
+            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+            <GridPageSettings PageSize="5" PageCount="3" PageSizes="true"></GridPageSettings>
+            <GridColumns >
+                <GridColumn Field=@nameof(StudentsWhoPayPass.Name) HeaderText="Имя"></GridColumn>
+                <GridColumn Field=@nameof(StudentsWhoPayPass.Group) HeaderText="Группа"></GridColumn>
+                <GridColumn Field=@nameof(StudentsWhoPayPass.Grade) HeaderText="Оценка"></GridColumn>
+                <GridColumn Field=@nameof(StudentsWhoPayPass.Discipline) HeaderText="Дисциплина"></GridColumn>
+            </GridColumns>
+        </SfGrid>
+    </ContentTemplate>
+</SpinLoader>
+@code {
+    public IEnumerable<StudentsWhoPayPass> students { get; set; }
+    private bool isLoading = true;
+    private ListOfAdmittedStudent _student;
+    protected override async Task OnInitializedAsync()
+    {
+        isLoading = true;
+        await base.OnInitializedAsync();
+        await Task.Delay(1500);
+        isLoading = false;
+        students = Context.StudentsWhoPayPasses;
+    }
+
+}
