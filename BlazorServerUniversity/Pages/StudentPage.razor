@@ -119,10 +119,10 @@
                                 <hr>
                                 <div class="row">
                                     <div class="col-sm-3">
-                                        <h6 class="mb-0">Телефон</h6>
+                                        <h6 class="mb-0">Статус</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        7 (915)-356-0898
+                                        @(_student.isStudy == 1 ? "Учится": "В академическом отпуске")
                                     </div>
                                 </div>
                                 <hr>
@@ -146,7 +146,7 @@
                                 <hr>
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <a class="btn btn-info " target="__blank">Изменить</a>
+                                        <button class="btn btn-info " @onclick="@(() => NavigationManager.NavigateTo($"EditStudentForm/{_student.IdStudent}"))">Изменить</button>
                                     </div>
                                 </div>
                             </div>

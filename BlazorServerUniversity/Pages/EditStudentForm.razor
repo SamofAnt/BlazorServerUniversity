@@ -1,0 +1,153 @@
+﻿@page "/EditStudentForm/{studentId:int}"
+
+@using Microsoft.Build.Framework
+@using System.ComponentModel.DataAnnotations;
+@using System.Transactions
+
+@using BlazorServerUniversity.Repositories
+@using Microsoft.EntityFrameworkCore
+
+@inject UniversityContext Context;
+@inject IPersonalDataRepository PersonalDataRepository;
+@inject IStudentRepository StudentRepository;
+@inject IToastService toastService
+@inject NavigationManager _nav
+
+<div class="col-12">
+    <h3>Изменение студента</h3>
+    <EditForm Model="@model" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit">
+        <DataAnnotationsValidator/>
+        <div class="form-group">
+            <label for="FirstName" class="font-weight-bold">Имя</label>
+            <InputText style="width: 30%" Id="FirstName" placeholder="First Name" @bind-Value="@model.FirstName" class="form-control col-3"></InputText>
+            <ValidationMessage For="@(() => model.FirstName)"/>
+        </div>
+        <div class="form-group">
+            <label for="LastName" class="font-weight-bold">Фамилия</label>
+            <InputText Id="LastName" style="width: 30%"placeholder="Last Name" @bind-Value="@model.LastName" class="form-control  col-3"></InputText>
+            <ValidationMessage For="@(() => model.LastName)"/>
+        </div>
+
+        <div class="form-group">
+            <label for="Age" class="font-weight-bold">Возраст</label>
+            <InputNumber Id="Age" style="width: 30%" placeholder="Age" @bind-Value="@model.Age" class="form-control col-3"></InputNumber>
+            <ValidationMessage For="@(() => model.Age)"/>
+        </div>
+
+        <div class="form-group">
+            <label for="Course" class="font-weight-bold">Курс</label>
+            <InputNumber Id="Course" style="width: 30%" placeholder="Course" @bind-Value="@model.Course" class="form-control col-3"></InputNumber>
+            <ValidationMessage For="@(() => model.Course)"/>
+        </div>
+        <div class="form-group">
+            <label for="Address" class="font-weight-bold">Адрес</label>
+            <InputText Id="Address" style="width: 30%" placeholder="Address" @bind-Value="@model.Address" class="form-control col-3"></InputText>
+            <ValidationMessage For="@(() => model.Address)"/>
+        </div>
+        <div class="form-group">
+            <label for="Group" class="font-weight-bold">Группа</label>
+            <InputSelect Id="Group" style="width: 30%" @bind-Value="@model.Group" class="form-control col-3">
+                <option selected>@model.Group</option>
+                @foreach (var group in Context.Groups)
+                {
+                    <option value="@group.IdGroup">@group.Name</option>
+                }
+            </InputSelect>
+        </div>
+        <button type="submit" class="btn btn-success">
+            @ButtonText
+        </button>
+    </EditForm>
+</div>
+
+@code {
+
+    public class StudentModel
+    {
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Введите имя студента")]
+        [StringLength(10)]
+        public string FirstName { get; set; }
+
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Введите фамилию студента")]
+        [StringLength(10)]
+        public string LastName { get; set; }
+
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Введите адресс")]
+        [StringLength(100)]
+        public string Address { get; set; }
+
+        [System.ComponentModel.DataAnnotations.Required]
+        [Range(17, 60, ErrorMessage = "Возраст должен быть между 17 и 60")]
+        public long Age { get; set; }
+
+
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Выберите группу")]
+        public string Group { get; set; }
+
+        [System.ComponentModel.DataAnnotations.Required]
+        [Range(1, 4, ErrorMessage = "Курс должен быть между 1 и 4")]
+        public long Course { get; set; }
+    }
+
+    [Parameter]
+    public int StudentId { get; set; }
+
+    private Student _student { get; set; }
+    private PersonalDatum DataStudent { get; set; }
+
+    public StudentModel model = new StudentModel();
+
+    [Parameter]
+    public string ButtonText { get; set; } = "Изменить";
+
+    [Parameter]
+    public EventCallback OnValidSubmit { get; set; }
+
+    bool displayValidationErrorMessages = false;
+    bool displayUserAddedToDB = false;
+
+
+    private void HandleValidSubmit(EditContext context)
+    {
+        displayValidationErrorMessages = false;
+        displayUserAddedToDB = true;
+        try
+        {
+            DataStudent.Address = model.Address;
+            DataStudent.Age = model.Age;
+            DataStudent.FirstName = model.FirstName;
+            DataStudent.LastName = model.LastName;
+            PersonalDataRepository.Update(DataStudent);
+            _student.Course = model.Course;
+            _student.GroupId = Convert.ToInt32(model.Group);
+            StudentRepository.Update(_student);
+            toastService.ShowSuccess($"{model.FirstName} {model.LastName} успешно изменен ", "Успешное изменение");
+        }
+        catch (Exception e)
+        {
+            toastService.ShowError("Не удалось изменить студента");
+        }
+    }
+
+    private void HandleInvalidSubmit(EditContext context)
+    {
+        displayValidationErrorMessages = true;
+        displayUserAddedToDB = false;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        _student = (await StudentRepository.GetAll()).FirstOrDefault(s => s.IdStudent == StudentId);
+        DataStudent = (await PersonalDataRepository.GetAll()).FirstOrDefault(s => s.StudentId == StudentId);
+        model.Address = DataStudent.Address;
+        model.Age = DataStudent.Age;
+        model.Course = _student.Course;
+        model.Group = Context.Groups.FirstOrDefault(s => s.IdGroup == _student.GroupId)?.Name;
+        model.FirstName = DataStudent.FirstName;
+        model.LastName = DataStudent.LastName;
+    }
+
+
+
+}
