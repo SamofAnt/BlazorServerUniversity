@@ -35,7 +35,14 @@
 
                                         <td class="title">
                                             <div class="thumb">
-                                                <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="">
+                                                @if (student.LastName[student.LastName.Length - 1] == 'а')
+                                                {
+                                                    <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar8.png" alt="">
+                                                }
+                                                else
+                                                {
+                                                    <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="">
+                                                }
                                             </div>
                                             <div class="candidate-list-details">
                                                 <div class="candidate-list-info">
@@ -62,7 +69,19 @@
 
                                         <td class="candidate-list-favourite-time text-center">
                                             <a class="candidate-list-favourite order-2 text-danger" href="#"></a>
-                                            <span class="candidate-list-time order-1">Admitted</span>
+
+                                            @if (student.isStudy == 1)
+                                            {
+                                                <span class="candidate-list-time order-1">
+                                                    Учится
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <span class="candidate-list-time order-1">
+                                                    В академическом отпуске
+                                                </span>
+                                            }
                                         </td>
                                         <td>
                                             <ul class="list-unstyled mb-0 d-flex justify-content-end">
@@ -138,8 +157,8 @@
     {
         if (accepted)
         {
-                await PersonalRepository.Remove(_studentToDelete);
-                _studentToDelete = null;
+            await PersonalRepository.Remove(_studentToDelete);
+            _studentToDelete = null;
         }
         DeleteDialogOpen = false;
         StateHasChanged();
@@ -157,7 +176,7 @@
         isLoading = true;
         await base.OnInitializedAsync();
         await Task.Delay(1500);
-        _students = (await studentRepository.GetAllByGroup()).Where(s=>s.isStudy == 1);
+        _students = (await studentRepository.GetAllByGroup());
         isLoading = false;
     }
 

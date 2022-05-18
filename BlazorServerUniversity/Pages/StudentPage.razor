@@ -33,7 +33,14 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex flex-column align-items-center text-center">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+                                    @if (_student.LastName[_student.LastName.Length - 1] == 'а')
+                                    {
+                                        <img src="https://bootdey.com/img/Content/avatar/avatar8.png" alt="Admin" class="rounded-circle" width="150">
+                                    }
+                                    else
+                                    {
+                                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+                                    }
                                     <div class="mt-3">
                                         <h4>@_student.FirstName @_student.LastName</h4>
                                         <p class="text-secondary mb-1">@_student.Age лет</p>
@@ -94,7 +101,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-sm-3">
-                                        <h6 class="mb-0">Full Name</h6>
+                                        <h6 class="mb-0">Полное имя</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
                                         @_student.FirstName @_student.LastName
@@ -112,7 +119,7 @@
                                 <hr>
                                 <div class="row">
                                     <div class="col-sm-3">
-                                        <h6 class="mb-0">Phone</h6>
+                                        <h6 class="mb-0">Телефон</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
                                         7 (915)-356-0898
@@ -121,7 +128,7 @@
                                 <hr>
                                 <div class="row">
                                     <div class="col-sm-3">
-                                        <h6 class="mb-0">Group</h6>
+                                        <h6 class="mb-0">Группа</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
                                         @_student.GroupName
@@ -130,7 +137,7 @@
                                 <hr>
                                 <div class="row">
                                     <div class="col-sm-3">
-                                        <h6 class="mb-0">Address</h6>
+                                        <h6 class="mb-0">Адрес</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
                                         @_student.Address
@@ -150,7 +157,7 @@
                                 <div class="card h-100">
                                     <div class="card-body">
                                         <h6 class="d-flex align-items-center mb-3">Результаты сессий</h6>
-                                        @if (_disciplinesStudent.Count()==0)
+                                        @if (_disciplinesStudent.Count() == 0)
                                         {
                                             <p>No records found</p>
                                         }
@@ -160,7 +167,7 @@
                                             {
                                                 <small>@discipline.DisciplineName</small>
                                                 <div class="progress mb-3" style="height: 5px">
-                                                    <div class="progress-bar bg-primary" role="progressbar" style="width:  @(Math.Ceiling((double)discipline.Grade / 5 * 100))%" aria-valuenow=" @(Math.Ceiling((double)discipline.Grade / 5 * 100))" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <div class="progress-bar bg-primary" role="progressbar" style="width:  @(Math.Ceiling((double) discipline.Grade / 5 * 100))%" aria-valuenow=" @(Math.Ceiling((double) discipline.Grade / 5 * 100))" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                             }
                                         }
@@ -171,7 +178,7 @@
                                 <div class="card h-100">
                                     <div class="card-body">
                                         <h6 class="d-flex align-items-center mb-3">Результаты сессий</h6>
-                                        @if (_disciplinesStudent.Count()==0)
+                                        @if (_disciplinesStudent.Count() == 0)
                                         {
                                             <p>No records found</p>
                                         }
@@ -181,7 +188,7 @@
                                             {
                                                 <small>@discipline.DisciplineName</small>
                                                 <div class="progress mb-3" style="height: 5px">
-                                                    <div class="progress-bar bg-primary" role="progressbar" style="width: @(Math.Ceiling((double)discipline.Grade / 5 * 100))%" aria-valuenow="@(Math.Ceiling((double)discipline.Grade / 5 * 100))" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <div class="progress-bar bg-primary" role="progressbar" style="width: @(Math.Ceiling((double) discipline.Grade / 5 * 100))%" aria-valuenow="@(Math.Ceiling((double) discipline.Grade / 5 * 100))" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                             }
                                         }
@@ -218,9 +225,17 @@
 
     public void OnAcademicLeave()
     {
-        var studentToAcadem = StudentRepository.GetById(_student.IdStudent).Result;
-        studentToAcadem.IsStudy = 0;
-        StudentRepository.Update(studentToAcadem);
+        try
+        {
+            var studentToAcadem = StudentRepository.GetById(_student.IdStudent).Result;
+            studentToAcadem.IsStudy = 0;
+            StudentRepository.Update(studentToAcadem);
+            _toastService.ShowSuccess($"{_student.FirstName} {_student.LastName} успешно ушел в академический отпуск", "База данных обновлена");
+        }
+        catch (Exception e)
+        {
+            _toastService.ShowError("Ошибка обновления системы", "Ошибка");
+        }
     }
 
     public void OnDeleteStudent()
@@ -228,13 +243,13 @@
         try
         {
             PersonalDataRepository.Remove(_student);
-            _toastService.ShowSuccess($"{_student.FirstName} {_student.LastName} успешно удален","Удален из системы");
+            _toastService.ShowSuccess($"{_student.FirstName} {_student.LastName} успешно удален", "Удален из системы");
             Task.Delay(1000);
             NavigationManager.NavigateTo("Students");
         }
         catch (Exception e)
         {
-            _toastService.ShowError("Не удалось удалить студента","Ошибка удаления");
+            _toastService.ShowError("Не удалось удалить студента", "Ошибка удаления");
         }
     }
 
