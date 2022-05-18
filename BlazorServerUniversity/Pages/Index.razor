@@ -1,2 +1,107 @@
 @page "/"
 
+@inject UniversityContext Context;
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-md-3 col-xl-3">
+            <div class="card bg-c-blue order-card">
+                <div class="card-block">
+                    <h6 class="m-b-20">Количество студентов</h6>
+                    <h2 class="text-right">
+                        <i class="fa fa-users f-left"></i><span>@_Students.Count()</span>
+                    </h2>
+                    <p class="m-b-0">Студенты в академическом отпуске<span class="f-right">@_Students.Count(s => s.IsStudy == 0)</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-xl-3">
+            <div class="card bg-c-green order-card">
+                <div class="card-block">
+                    <h6 class="m-b-20">Количество преподавателей</h6>
+                    <h2 class="text-right">
+                        <i class="fa fa-rocket f-left"></i><span>@_Professors.Count()</span>
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-xl-3">
+            <div class="card bg-c-yellow order-card">
+                <div class="card-block">
+                    <h6 class="m-b-20">Количество дисциплин</h6>
+                    <h2 class="text-right">
+                        <i class="fa  fa-book  f-left"></i><span>@_Disciplines.Count()</span>
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-xl-3">
+            <div class="card bg-c-pink order-card">
+                <div class="card-block">
+                    <h6 class="m-b-20">Количество групп</h6>
+                    <h2 class="text-right">
+                        <i class="fa fa-graduation-cap f-left"></i><span>@_Groups.Count()</span>
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-xl-3">
+            <div class="card bg-c-yellow order-card">
+                <div class="card-block">
+                    <h6 class="m-b-20">Количество специальностей</h6>
+                    <h2 class="text-right">
+                        <i class="fa fa-credit-card f-left"></i><span>@_specialities.Count()</span>
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-xl-3">
+            <div class="card bg-c-blue order-card">
+                <div class="card-block">
+                    <h6 class="m-b-20">Количество кафедр</h6>
+                    <h2 class="text-right">
+                        <i class="fa fa-credit-card f-left"></i><span>@_departments.Count()</span>
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-xl-3">
+            <div class="card bg-c-pink order-card">
+                <div class="card-block">
+                    <h6 class="m-b-20">Количество факультетов</h6>
+                    <h2 class="text-right">
+                        <i class="fa fa-credit-card f-left"></i><span>@_faculties.Count()</span>
+                    </h2>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+@code{
+
+    private IEnumerable<Student> _Students { get; set; }
+    private IEnumerable<Discipline> _Disciplines { get; set; }
+    private IEnumerable<Group> _Groups { get; set; }
+    private IEnumerable<Professor> _Professors { get; set; }
+    private  IEnumerable<Faculty> _faculties { get; set; }
+    private IEnumerable<Department> _departments {get;set;}
+    private IEnumerable<Speciality> _specialities { get; set; }
+
+    protected override void OnInitialized()
+    {
+        _Students = Context.Students;
+        _Disciplines = Context.Disciplines;
+        _Groups = Context.Groups;
+        _Professors = Context.Professors;
+        _faculties = Context.Faculties;
+        _departments = Context.Departments;
+        _specialities = Context.Specialities;
+    }
+
+}
