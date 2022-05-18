@@ -2,7 +2,7 @@
 
 public interface IStudentRepository
 {
-    Task<Student> GetById(int id);
+    Task<Student> GetById(long id);
     Task<IEnumerable<Student>> GetAll();
     Task<IEnumerable<StudentInfo>> GetAllWithInfo();
     Task<IEnumerable<StudentInfo>> GetAllByGroup();

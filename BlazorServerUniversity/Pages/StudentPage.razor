@@ -34,7 +34,7 @@
                                         <h4>@_student.FirstName @_student.LastName</h4>
                                         <p class="text-secondary mb-1">@_student.Age лет</p>
                                         <p class="text-muted font-size-sm">@_student.Address</p>
-                                        <button class="btn btn-primary">В академ отпуск</button>
+                                        <button class="btn btn-primary" @onclick="OnAcademicLeave">В академ отпуск</button>
                                         <button class="btn btn-outline-danger">Удалить</button>
                                     </div>
                                 </div>
@@ -210,6 +210,13 @@
         var students = await StudentRepository.GetAllWithInfo();
         _student = students.FirstOrDefault(s => s.IdStudent == StudentId)!;
         isLoading = false;
+    }
+
+    public void OnAcademicLeave()
+    {
+        var studentToAcadem = StudentRepository.GetById(_student.IdStudent).Result;
+        studentToAcadem.IsStudy = 0;
+        StudentRepository.Update(studentToAcadem);
     }
 
 }

@@ -11,4 +11,5 @@ public class StudentInfo
     public long IdDiscipline { get; set; }
     public string DisciplineName { get; set; }
     public long Grade { get; set; }
+    public long isStudy { get; set; }
 }

@@ -157,7 +157,7 @@
         isLoading = true;
         await base.OnInitializedAsync();
         await Task.Delay(1500);
-        _students = (await studentRepository.GetAllByGroup());
+        _students = (await studentRepository.GetAllByGroup()).Where(s=>s.isStudy == 1);
         isLoading = false;
     }
 

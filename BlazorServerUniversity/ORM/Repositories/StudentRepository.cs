@@ -7,7 +7,7 @@ public class StudentRepository : IStudentRepository
 {
     private readonly UniversityContext _context;
     public StudentRepository(UniversityContext context) => _context = context ?? throw new ArgumentNullException(nameof(context));
-    public async Task<Student> GetById(int id) => await _context.Students.FirstAsync(s => s.IdStudent == id);
+    public async Task<Student> GetById(long id) => await _context.Students.FirstAsync(s => s.IdStudent == id);
 
     public async Task<IEnumerable<Student>> GetAll() => await _context.Students.ToListAsync();
     public async Task<IEnumerable<StudentInfo>> GetAllWithInfo() =>
@@ -21,7 +21,8 @@ public class StudentRepository : IStudentRepository
                 LastName = pd.LastName,
                 Age = pd.Age,
                 Address = pd.Address,
-                GroupName = g.Name
+                GroupName = g.Name,
+                isStudy = s.IsStudy
             }).ToListAsync();
 
     public async Task<IEnumerable<StudentInfo>> GetAllByGroup() =>
@@ -36,7 +37,8 @@ public class StudentRepository : IStudentRepository
                 LastName = pd.LastName,
                 Age = pd.Age,
                 Address = pd.Address,
-                GroupName = g.Name
+                GroupName = g.Name,
+                isStudy = s.IsStudy
             }).ToListAsync();
 
     public async Task<Student?> FindById(int id) => await _context.Students.FirstOrDefaultAsync(s => s.IdStudent == id);
