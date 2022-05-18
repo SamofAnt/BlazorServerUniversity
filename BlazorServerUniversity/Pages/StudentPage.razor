@@ -3,6 +3,10 @@
 @using BlazorServerUniversity.Repositories
 
 @inject IStudentRepository StudentRepository;
+@inject IPersonalDataRepository PersonalDataRepository;
+@inject IToastService _toastService;
+@inject NavigationManager NavigationManager
+
 <div class="container">
     <div class="main-body">
 
@@ -35,7 +39,7 @@
                                         <p class="text-secondary mb-1">@_student.Age лет</p>
                                         <p class="text-muted font-size-sm">@_student.Address</p>
                                         <button class="btn btn-primary" @onclick="OnAcademicLeave">В академ отпуск</button>
-                                        <button class="btn btn-outline-danger">Удалить</button>
+                                        <button class="btn btn-outline-danger" @onclick="OnDeleteStudent">Удалить</button>
                                     </div>
                                 </div>
                             </div>
@@ -217,6 +221,21 @@
         var studentToAcadem = StudentRepository.GetById(_student.IdStudent).Result;
         studentToAcadem.IsStudy = 0;
         StudentRepository.Update(studentToAcadem);
+    }
+
+    public void OnDeleteStudent()
+    {
+        try
+        {
+            PersonalDataRepository.Remove(_student);
+            _toastService.ShowSuccess($"{_student.FirstName} {_student.LastName} успешно удален","Удален из системы");
+            Task.Delay(1000);
+            NavigationManager.NavigateTo("Students");
+        }
+        catch (Exception e)
+        {
+            _toastService.ShowError("Не удалось удалить студента","Ошибка удаления");
+        }
     }
 
 }

@@ -14,37 +14,35 @@
     <h3>Добавление студента</h3>
     <EditForm Model="@model" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit">
         <DataAnnotationsValidator/>
-        <div class="form-row">
-            <div class="form-group col-md-6">
+            <div class="form-group">
                 <label for="FirstName" class="font-weight-bold">First Name</label>
                 <InputText style="width: 30%" Id="FirstName" placeholder="First Name" @bind-Value="@model.FirstName" class="form-control col-3"></InputText>
                 <ValidationMessage For="@(() => model.FirstName)"/>
             </div>
-            <div class="form-group col-md-6">
-                <label for="LastName" class="col-2 font-weight-bold">Last Name</label>
+            <div class="form-group">
+                <label for="LastName" class="font-weight-bold">Last Name</label>
                 <InputText Id="LastName" style="width: 30%"placeholder="Last Name" @bind-Value="@model.LastName" class="form-control  col-3"></InputText>
                 <ValidationMessage For="@(() => model.LastName)"/>
             </div>
-        </div>
 
         <div class="form-group">
-            <label for="Age" class="col-2 font-weight-bold">Age</label>
+            <label for="Age" class="font-weight-bold">Age</label>
             <InputNumber Id="Age" style="width: 30%" placeholder="Age" @bind-Value="@model.Age" class="form-control col-3"></InputNumber>
             <ValidationMessage For="@(() => model.Age)"/>
         </div>
 
         <div class="form-group">
-            <label for="Course" class="col-2 font-weight-bold">Course</label>
+            <label for="Course" class="font-weight-bold">Course</label>
             <InputNumber Id="Course" style="width: 30%" placeholder="Course" @bind-Value="@model.Course" class="form-control col-3"></InputNumber>
             <ValidationMessage For="@(() => model.Course)"/>
         </div>
         <div class="form-group">
-            <label for="Address" class="col-2 font-weight-bold">Address</label>
+            <label for="Address" class="font-weight-bold">Address</label>
             <InputText Id="Address" style="width: 30%" placeholder="Address" @bind-Value="@model.Address" class="form-control col-3"></InputText>
             <ValidationMessage For="@(() => model.Address)"/>
         </div>
         <div class="form-group">
-            <label for="Group" class="col-2 font-weight-bold">Group</label>
+            <label for="Group" class="font-weight-bold">Group</label>
             <InputSelect Id="Group" style="width: 30%" @bind-Value="@model.Group" class="form-control col-3">
                 <option selected>-- Select --</option>
                 @foreach (var group in Context.Groups)
@@ -53,7 +51,6 @@
                 }
             </InputSelect>
         </div>
-        <br/>
         <button type="submit" class="btn btn-success">
             @ButtonText
         </button>
