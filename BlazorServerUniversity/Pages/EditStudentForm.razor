@@ -19,29 +19,29 @@
         <DataAnnotationsValidator/>
         <div class="form-group">
             <label for="FirstName" class="font-weight-bold">Имя</label>
-            <InputText style="width: 30%" Id="FirstName" placeholder="First Name" @bind-Value="@model.FirstName" class="form-control col-3"></InputText>
+            <InputText style="width: 30%" Id="FirstName" placeholder="Введите имя" @bind-Value="@model.FirstName" class="form-control col-3"></InputText>
             <ValidationMessage For="@(() => model.FirstName)"/>
         </div>
         <div class="form-group">
             <label for="LastName" class="font-weight-bold">Фамилия</label>
-            <InputText Id="LastName" style="width: 30%"placeholder="Last Name" @bind-Value="@model.LastName" class="form-control  col-3"></InputText>
+            <InputText Id="LastName" style="width: 30%"placeholder="Введите фамилию" @bind-Value="@model.LastName" class="form-control  col-3"></InputText>
             <ValidationMessage For="@(() => model.LastName)"/>
         </div>
 
         <div class="form-group">
             <label for="Age" class="font-weight-bold">Возраст</label>
-            <InputNumber Id="Age" style="width: 30%" placeholder="Age" @bind-Value="@model.Age" class="form-control col-3"></InputNumber>
+            <InputNumber Id="Age" style="width: 30%" placeholder="Введите возраст" @bind-Value="@model.Age" class="form-control col-3"></InputNumber>
             <ValidationMessage For="@(() => model.Age)"/>
         </div>
 
         <div class="form-group">
             <label for="Course" class="font-weight-bold">Курс</label>
-            <InputNumber Id="Course" style="width: 30%" placeholder="Course" @bind-Value="@model.Course" class="form-control col-3"></InputNumber>
+            <InputNumber Id="Course" style="width: 30%" placeholder="Выберите курс" @bind-Value="@model.Course" class="form-control col-3"></InputNumber>
             <ValidationMessage For="@(() => model.Course)"/>
         </div>
         <div class="form-group">
             <label for="Address" class="font-weight-bold">Адрес</label>
-            <InputText Id="Address" style="width: 30%" placeholder="Address" @bind-Value="@model.Address" class="form-control col-3"></InputText>
+            <InputText Id="Address" style="width: 30%" placeholder="Введите адрес" @bind-Value="@model.Address" class="form-control col-3"></InputText>
             <ValidationMessage For="@(() => model.Address)"/>
         </div>
         <div class="form-group">

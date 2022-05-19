@@ -22,9 +22,9 @@
                             <table class="table manage-candidates-top mb-0">
                                 <thead>
                                 <tr>
-                                    <th>Student Name</th>
-                                    <th class="text-center">Status</th>
-                                    <th class="action text-right">Action</th>
+                                    <th>Имя студента</th>
+                                    <th class="text-center">Статус</th>
+                                    <th class="action text-right">Действия</th>
                                 </tr>
                                 </thead>
 
@@ -93,12 +93,14 @@
                                                     </NavLink>
                                                 </li>
                                                 <li>
-                                                    <a href="#" class="text-info" data-toggle="tooltip" title="" data-original-title="Edit">
+                                                <NavLink href="@($"EditStudentForm/{student.IdStudent}")">
+                                                    <a  class="text-info" data-toggle="tooltip" title="" data-original-title="Edit">
                                                         <i class="fas fa-pencil-alt"></i>
                                                     </a>
+                                                    </NavLink>
                                                 </li>
                                                 <li>
-                                                    <a class="text-danger" data-toggle="tooltip" title="" data-original-title="Delete" @onclick="() => OpenDeleteDialog(student)">
+                                                    <a style="cursor: pointer" class="text-danger" data-toggle="tooltip" title="" data-original-title="Delete" @onclick="() => OpenDeleteDialog(student)">
                                                         <i class="far fa-trash-alt"></i>
                                                     </a>
                                                 </li>
@@ -141,7 +143,7 @@
         </div>
         @if (DeleteDialogOpen)
         {
-            <ModalDialog Title="Are you sure?" Text="Do you want to delete this student?" OnClose="@OnDeleteDialogClose"
+            <ModalDialog Title="Вы уверены?" Text="@($"Вы хотите отчислить {_studentToDelete.FirstName} {_studentToDelete.LastName}?")" OnClose="@OnDeleteDialogClose"
                          DialogType="ModalDialog.ModalDialogType.DeleteCancel"/>
         }
     </ContentTemplate>
