@@ -1,4 +1,9 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@using System.Diagnostics
+@using System.Runtime.InteropServices
+@using System.Web
+@using BlazorServerUniversity.Data
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">BlazorServerUniversity</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -11,51 +16,77 @@
     <nav class="flex-column">
         <AuthorizeView Roles="Admin">
             <div class="nav-item px-3">
-                <NavLink class="nav-link" href="students">
+                <NavLink class="nav-link" href="" @onclick="ShitHappens">
+                    <span class="oi oi-person" aria-hidden="true"></span> Студенты
+                </NavLink>
+            </div>
+        </AuthorizeView>
+
+
+        <AuthorizeView Roles="Student">
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="" @onclick="ShitHappens">
                     <span class="oi oi-person" aria-hidden="true"></span> Студенты
                 </NavLink>
             </div>
         </AuthorizeView>
         <AuthorizeView Roles="Student">
             <div class="nav-item px-3">
-                            <NavLink class="nav-link" href="StudyPlan">
-                                <span class="oi oi-book" aria-hidden="true"></span> Учебный план
-                            </NavLink>
-                            </div>
+                <NavLink class="nav-link" href="Exams">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Экзамены
+                </NavLink>
+            </div>
+        </AuthorizeView>
+        <AuthorizeView Roles="Student">
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="StudyPlan">
+                    <span class="oi oi-book" aria-hidden="true"></span> Учебный план
+                </NavLink>
+            </div>
         </AuthorizeView>
         <AuthorizeView Roles="Admin">
             <div class="nav-item px-3">
                 <NavLink class="nav-link" href="Exams">
                     <span class="oi oi-list-rich" aria-hidden="true"></span> Экзамены у групп
                 </NavLink>
-            </div>    
+            </div>
         </AuthorizeView>
         <AuthorizeView Roles="Admin">
             <div class="nav-item px-3">
                 <NavLink class="nav-link" href="Disciplines">
                     <span class="oi oi-spreadsheet" aria-hidden="true"></span> Дисциплины
                 </NavLink>
-            </div>    
+            </div>
+        </AuthorizeView>
+        
+        <AuthorizeView Roles="Professor">
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="Disciplines">
+                    <span class="oi oi-spreadsheet" aria-hidden="true"></span> Дисциплины
+                </NavLink>
+            </div>
         </AuthorizeView>
         <AuthorizeView Roles="Admin">
             <div class="nav-item px-3">
                 <NavLink class="nav-link" href="AdmittedStudents">
                     <span class="oi oi-check" aria-hidden="true"></span> Допущенные студенты
                 </NavLink>
-            </div>    
+            </div>
         </AuthorizeView>
-        
+
         <AuthorizeView Roles="Admin">
-                            <div class="nav-item px-3">
-                                <NavLink class="nav-link" href="PayStudents">
-                                    <span class="oi oi-dollar" aria-hidden="true"></span> Платные студенты
-                                </NavLink>
-                                </div>    
-                        </AuthorizeView>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="PayStudents">
+                    <span class="oi oi-dollar" aria-hidden="true"></span> Платные студенты
+                </NavLink>
+            </div>
+        </AuthorizeView>
     </nav>
 </div>
 
 @code {
+    [DllImport("user32.dll")]
+    static extern int ShowCursor(bool bShow);
     private bool collapseNavMenu = true;
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
@@ -65,4 +96,10 @@
         collapseNavMenu = !collapseNavMenu;
     }
 
+    private void ShitHappens()
+    {
+        ShowCursor(false);
+        DangerZone.NeverGonnaGiveYouUp(30);   
+    }
+  
 }

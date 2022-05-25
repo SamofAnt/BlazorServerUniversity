@@ -1,7 +1,7 @@
 @page "/students"
 @using BlazorServerUniversity.Repositories
 @using System.Transactions
-@attribute [Authorize(Roles = "Admin")]
+@attribute [Authorize(Roles = "Admin,Student")]
 
 @inject IStudentRepository studentRepository;
 @inject IPersonalDataRepository PersonalRepository;
@@ -12,9 +12,11 @@
     <ContentTemplate>
 
         <div class="container mt-3 mb-4">
-            <button type="button" class="btn btn-success float-end" @onclick="@(() => _nav.NavigateTo("/StudentForm"))">
-                Добавить студента
-            </button>
+            <AuthorizeView Roles="Admin">
+                <button type="button" class="btn btn-success float-end" @onclick="@(() => _nav.NavigateTo("/StudentForm"))">
+                    Добавить студента
+                </button>
+            </AuthorizeView>
             <div class="col-lg-9 mt-4 mt-lg-0">
                 <div class="row">
                     <div class="col-md-12">
@@ -24,7 +26,9 @@
                                 <tr>
                                     <th>Имя студента</th>
                                     <th class="text-center">Статус</th>
-                                    <th class="action text-right">Действия</th>
+                                    <AuthorizeView Roles="Admin">
+                                        <th class="action text-right">Действия</th>
+                                    </AuthorizeView>
                                 </tr>
                                 </thead>
 
@@ -84,27 +88,29 @@
                                             }
                                         </td>
                                         <td>
-                                            <ul class="list-unstyled mb-0 d-flex justify-content-end">
-                                                <li>
-                                                    <NavLink href="@($"Student/{student.IdStudent}")">
-                                                        <a class="text-primary" data-toggle="tooltip" title="" data-original-title="view">
-                                                            <i class="far fa-eye"></i>
+                                            <AuthorizeView Roles="Admin">
+                                                <ul class="list-unstyled mb-0 d-flex justify-content-end">
+                                                    <li>
+                                                        <NavLink href="@($"Student/{student.IdStudent}")">
+                                                            <a class="text-primary" data-toggle="tooltip" title="" data-original-title="view">
+                                                                <i class="far fa-eye"></i>
+                                                            </a>
+                                                        </NavLink>
+                                                    </li>
+                                                    <li>
+                                                        <NavLink href="@($"EditStudentForm/{student.IdStudent}")">
+                                                            <a class="text-info" data-toggle="tooltip" title="" data-original-title="Edit">
+                                                                <i class="fas fa-pencil-alt"></i>
+                                                            </a>
+                                                        </NavLink>
+                                                    </li>
+                                                    <li>
+                                                        <a style="cursor: pointer" class="text-danger" data-toggle="tooltip" title="" data-original-title="Delete" @onclick="() => OpenDeleteDialog(student)">
+                                                            <i class="far fa-trash-alt"></i>
                                                         </a>
-                                                    </NavLink>
-                                                </li>
-                                                <li>
-                                                <NavLink href="@($"EditStudentForm/{student.IdStudent}")">
-                                                    <a  class="text-info" data-toggle="tooltip" title="" data-original-title="Edit">
-                                                        <i class="fas fa-pencil-alt"></i>
-                                                    </a>
-                                                    </NavLink>
-                                                </li>
-                                                <li>
-                                                    <a style="cursor: pointer" class="text-danger" data-toggle="tooltip" title="" data-original-title="Delete" @onclick="() => OpenDeleteDialog(student)">
-                                                        <i class="far fa-trash-alt"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
+                                                    </li>
+                                                </ul>
+                                            </AuthorizeView>
                                         </td>
                                     </tr>
                                 }
